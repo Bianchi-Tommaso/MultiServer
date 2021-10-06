@@ -3,9 +3,11 @@ package Server;
 import java.io.BufferedReader;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server
 {
@@ -15,7 +17,8 @@ public class Server
     String stringModificata = null;
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
-
+    GestioneThread gestioneThread;
+    
     public Server(int porta) 
     {
         this.porta = porta;
@@ -28,6 +31,8 @@ public class Server
             server = new ServerSocket(porta);   
 
             System.out.println("Server partito");
+            
+            GestioneThread gestisciClient = new GestioneThread(server);
 
             for(;;)
             {
@@ -35,19 +40,22 @@ public class Server
                 Socket socket = server.accept();
 
                 System.out.println("Server Socket: " + socket);
-                ServerThread serverThread = new ServerThread(socket, server);
+                ServerThread serverThread = new ServerThread(socket, server, gestisciClient);
+                
+                gestisciClient.AggiungiClient(socket);
 
                 serverThread.start();
             }
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage());
             System.out.println("Errore Durante La Connessione");
             System.exit(1);
         }
 
     }
+  
+   
 
     /*
     public void Comunica()
