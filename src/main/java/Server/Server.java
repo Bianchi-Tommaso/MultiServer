@@ -1,22 +1,24 @@
 package Server;
 
 import java.io.BufferedReader;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+
+/**
+ * Questa classe serve per lanciare i thread per la gestione di ogni connessione accettata dal Server.
+ * Lancia un Thread, poi si rimette in attesa e attende una nuova richiesta dai Client.
+ * @author Tommaso
+ */
 
 public class Server
 {
-    private int porta;
-    ServerSocket server = null;
-    String stringRicevuta = null;
-    String stringModificata = null;
-    BufferedReader inDalClient;
-    DataOutputStream outVersoClient;
+    private int porta; //Porta del Server
+    ServerSocket server = null; //Variabile per avviare il server in una specifica Porta
+    String stringRicevuta = null; //Variabile per l'input Client Stringa
+    String stringModificata = null; //Variabile per modificare la stringa ricevuta dal Client
+    BufferedReader inDalClient;     //Variabile input per leggere le Stringhe del Client
+    DataOutputStream outVersoClient; //Variabile output per inviare le Stringhe al Client
     GestioneThread gestioneThread;
     
     public Server(int porta) 
@@ -28,23 +30,23 @@ public class Server
     {
         try
         {
-            server = new ServerSocket(porta);   
+            server = new ServerSocket(porta);   //Il Server si avvia aprendo la porta
 
             System.out.println("Server partito");
             
             GestioneThread gestisciClient = new GestioneThread(server);
 
-            for(;;)
+            for(;;) //For per instanziare un Thread ogni volta che si connette un client
             {
                 System.out.println("Server in attesa...");
-                Socket socket = server.accept();
+                Socket socket = server.accept();    //Il Server attende
 
                 System.out.println("Server Socket: " + socket);
-                ServerThread serverThread = new ServerThread(socket, server, gestisciClient);
+                ServerThread serverThread = new ServerThread(socket, server, gestisciClient); //Passaggio dei parametri
                 
-                gestisciClient.AggiungiClient(socket);
+                gestisciClient.AggiungiClient(socket); //Aggiungi il client all'Array
 
-                serverThread.start();
+                serverThread.start(); //Lancio il Thread che gestisce un Client
             }
         }
         catch(Exception e)

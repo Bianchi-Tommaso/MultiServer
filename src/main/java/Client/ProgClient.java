@@ -4,6 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Questa classe ha lo scopo di lanciare il client per connettersi al Server. Il main prende in Input
+ * l'ip del server e la porta associata del Server.
+ * @author Tommaso
+ */
+
 public class ProgClient 
 {
     public static void main( String[] args ) throws IOException
@@ -21,7 +27,7 @@ public class ProgClient
 
         Client client = new Client(ipAddress, Integer.valueOf(porta));
         
-        client.Connetti();
-        client.Comunica();
+        client.Connetti();      //Client tenta di connettersi con i parametri presi in Input
+        client.Comunica();      //Qui il client comincia a comunicare con il Server
     }
 }

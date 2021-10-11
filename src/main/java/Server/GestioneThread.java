@@ -5,11 +5,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Questa classe ha il compito di contenere i Client che si connettono al Server, per poter soddisfare 
+ * le richieste prima di Spegnere completamente il Server.
+ * @author Tommaso
+ */
+
 public class GestioneThread 
 {
-    ServerSocket server;
+    ServerSocket server;    
     boolean STOP = false;
-    ArrayList<Socket> clientRunning = new ArrayList<Socket>();
+    ArrayList<Socket> clientRunning = new ArrayList<Socket>();  //Contenitore Dei Client connessi
     
     public GestioneThread(ServerSocket server)
     {
@@ -26,12 +32,12 @@ public class GestioneThread
         clientRunning.remove(x);
     }
     
-    public boolean isEmpty()
+    public boolean isEmpty()    //Controlla se l'array è vuoto
     {
         return clientRunning.isEmpty();
     }
     
-    public int getSize()
+    public int getSize()        //Ritorna la grandezza
     {
         return clientRunning.size();
     }
