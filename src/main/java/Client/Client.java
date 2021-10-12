@@ -36,7 +36,6 @@ public class Client
 
             outVersoServer = new DataOutputStream(mioSocket.getOutputStream());
             inDalServer = new BufferedReader(new InputStreamReader(mioSocket.getInputStream()));
-
         }
         catch(UnknownHostException e)
         {
@@ -71,6 +70,7 @@ public class Client
                 if(stringUtente == null || stringUtente.equals("FINE") || stringUtente.equals("STOP") || stringRicevutaDalServer.contains("STOP"))
                 {
                     System.out.println("CLIENT: Termina Elaborazione E Chiude Connessione");
+                    inDalServer.close();
                     mioSocket.close();
                     break;
                 }

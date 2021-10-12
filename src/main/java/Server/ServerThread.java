@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * Questa classe rappresenta il Thread che verrà lanciato dalla Classe Server. ServerThread gestisce
@@ -23,8 +22,9 @@ public class ServerThread extends Thread
     BufferedReader inDalClient;     //Variabile input per leggere le Stringhe del Client
     DataOutputStream outVersoClient;//Variabile output per inviare le Stringhe al Client
     GestioneThread gestioneThread;  //Gestione dei Client
+    GestioneThreadInputOutput test;
 
-    public ServerThread(Socket socket, ServerSocket server, GestioneThread gestioneThread)
+    public ServerThread(Socket socket, ServerSocket server, GestioneThread gestioneThread) //Costruttore 
     {
         this.client = socket;
         this.server = server;
@@ -61,17 +61,20 @@ public class ServerThread extends Thread
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         outVersoClient = new DataOutputStream(client.getOutputStream());
 
+        //test.AggiungiClientStream(outVersoClient);
+
         for(;;)
         {
             stringRicevuta = inDalClient.readLine(); //Attesa di leggere una Stringa dal Client.
             
-            Controllo(gestioneThread);
+            //Controllo(gestioneThread);
 
             if(stringRicevuta == null || stringRicevuta.equals("STOP")) //Controllo Chiusura Server
             {
                 outVersoClient.writeBytes(stringRicevuta + "Server In Chiusura..." + '\n');
                 System.out.println("Server in Chiusura: " + stringRicevuta);
-                gestioneThread.Stop();
+                gestioneThread.StopClient();
+                server.close();
                 break;
             }
             else if(stringRicevuta.equals("FINE"))  //Controllo Chiusura Connessione Client
@@ -95,17 +98,18 @@ public class ServerThread extends Thread
      * @throws IOException 
      */
      public void Controllo(GestioneThread gestisci) throws IOException
-    {            
-                if(gestisci.getStop())  //Controllo se un Client ha scritto STOP per chiudere il Server
+    {            /*
+                if()  //Controllo se un Client ha scritto STOP per chiudere il Server
                 {
-                  outVersoClient.writeBytes(stringRicevuta.toUpperCase() + " Ricevuta e ritrasmessa in MAIUSCOLO" + "STOP" + '\n');
+                  outVersoClient.writeBytes(stringRicevuta.toUpperCase() + " Ricevuta e ritrasmessa in MAIUSCOLO " + " STOP" + '\n');
                   ChiudiConnessione(gestioneThread);
                   
                   if(gestisci.getSize() == 1)
                   {
-                      server.close();   //Chiusrura Della Porta(Chiusura Socket)
+                      server.close();   //Chiusrura Della Porta(Chiusura SocketServer)
                   }   
-                }                      
+                }     
+                */                 
     }
      
      /**

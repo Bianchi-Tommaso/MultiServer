@@ -13,12 +13,12 @@ import java.net.Socket;
 
 public class Server
 {
-    private int porta; //Porta del Server
-    ServerSocket server = null; //Variabile per avviare il server in una specifica Porta
-    String stringRicevuta = null; //Variabile per l'input Client Stringa
-    String stringModificata = null; //Variabile per modificare la stringa ricevuta dal Client
-    BufferedReader inDalClient;     //Variabile input per leggere le Stringhe del Client
-    DataOutputStream outVersoClient; //Variabile output per inviare le Stringhe al Client
+    private int porta;                  //Porta del Server
+    ServerSocket server = null;         //Variabile per avviare il server in una specifica Porta
+    String stringRicevuta = null;       //Variabile per l'input Client Stringa
+    String stringModificata = null;     //Variabile per modificare la stringa ricevuta dal Client
+    BufferedReader inDalClient;         //Variabile input per leggere le Stringhe del Client
+    DataOutputStream outVersoClient;    //Variabile output per inviare le Stringhe al Client
     GestioneThread gestioneThread;
     
     public Server(int porta) 
@@ -34,7 +34,9 @@ public class Server
 
             System.out.println("Server partito");
             
-            GestioneThread gestisciClient = new GestioneThread(server);
+            GestioneThread gestisciClient = new GestioneThread();
+            //GestioneThreadInputOutput test = new GestioneThreadInputOutput();
+            //test.start();
 
             for(;;) //For per instanziare un Thread ogni volta che si connette un client
             {

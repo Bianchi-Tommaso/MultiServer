@@ -11,16 +11,11 @@ import java.util.ArrayList;
  * @author Tommaso
  */
 
-public class GestioneThread 
+public class GestioneThread extends Thread
 {
     ServerSocket server;    
     boolean STOP = false;
     ArrayList<Socket> clientRunning = new ArrayList<Socket>();  //Contenitore Dei Client connessi
-    
-    public GestioneThread(ServerSocket server)
-    {
-        this.server = server;
-    }
 
     public void AggiungiClient(Socket x)
     {
@@ -46,14 +41,10 @@ public class GestioneThread
     {
         return clientRunning;
     }
-    
-    public void Stop() throws IOException
+
+    public void StopClient() throws IOException
     {
-        this.STOP = true;
-    }
-    
-    public boolean getStop()
-    {
-        return STOP;
+        for(int i = 0; i < clientRunning.size(); i++)
+            clientRunning.get(i).close();
     }
 }
