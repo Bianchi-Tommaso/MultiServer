@@ -1,8 +1,8 @@
 /target/
 /src/test/java/
-/settings/
-/vscode/
-/classpath/
-/project/
-/gitignore/
+/.settings/
+/.vscode/
+/.classpath/
+/.project/
+/.gitignore/
 
